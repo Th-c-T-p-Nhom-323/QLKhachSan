@@ -64,17 +64,62 @@ namespace QuanLyKhachSan
 
         private void radView_CheckedChanged(object sender, EventArgs e)
         {
-           
+            RadioButton rad = (RadioButton)(sender);
+            if (rad.Checked == true)
+            {
+                butFree.Text = rad.Text;
+                if (rad.Text == "View")
+                {
+                    butFree.Enabled = false;
+                    textPrice.ReadOnly = textName.ReadOnly = textID.ReadOnly = true;
+                }
+                else
+                {
+                    butFree.Enabled = true;
+                    textID.ReadOnly = true;
+                    textPrice.ReadOnly = textName.ReadOnly = false;
+                    if (rad.Text == "Add")
+                    {
+                        textID.ReadOnly = false;
+                        textPrice.Text = textName.Text = textID.Text = "";
+                    }
+                }
+            }
         }
 
         private void butDel_Click(object sender, EventArgs e)
         {
-            
+            if (listView1.SelectedItems.Count > 0)
+            {
+                connector.DeleteObject("3", textID.Text.Trim(), "");
+                if (butSearch.Text.Trim() == "Normal Mode")
+                {
+                    reset2();
+                }
+                else reset();
+                textPrice.Text = textName.Text = textID.Text = "";
+                MessageBox.Show("Deleting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void butSearch_Click(object sender, EventArgs e)
         {
-           
+            if (butSearch.Text.Trim() == "Search Mode")
+            {
+                if (textSearch.Text.Trim() == "")
+                {
+                    MessageBox.Show("Text box is empty!", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textSearch.Focus();
+                    return;
+                }
+                butSearch.Text = "Normal Mode";
+                reset2();
+            }
+            else
+            {
+                butSearch.Text = "Search Mode";
+                reset();
+            }
         }
         private bool check(int k)
         {
@@ -120,7 +165,20 @@ namespace QuanLyKhachSan
 
         private void butFree_Click(object sender, EventArgs e)
         {
-            
+            if (butFree.Text == "Add")
+            {
+                if (check(1) == false) return;
+                connector.InsertUpdateObject("AddObject", "3", textID.Text, "", textName.Text, "1/1/1994", "1/1/1994", textPrice.Text);
+                MessageBox.Show("Inserting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (check(2) == false) return;
+                connector.InsertUpdateObject("EditObject", "3", textID.Text, "", textName.Text, "1/1/1994", "1/1/1994", textPrice.Text);
+                MessageBox.Show("Updating completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            if (butSearch.Text.Trim() == "Search Mode") reset();
+            else reset2();
         }
     }
 }
