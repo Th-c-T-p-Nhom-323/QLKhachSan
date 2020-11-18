@@ -91,12 +91,37 @@ namespace QuanLyKhachSan
 
         private void butDel_Click(object sender, EventArgs e)
         {
-            
+            if (listView1.SelectedItems.Count > 0)
+            {
+                connector.DeleteObject("2", textID.Text.Trim(), "");
+                if (butSearch.Text.Trim() == "Normal Mode")
+                {
+                    reset2();
+                }
+                else reset();
+                textCost.Text = textState.Text = textID.Text = textNote.Text = "";
+                MessageBox.Show("Deleting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void butSearch_Click(object sender, EventArgs e)
         {
-            
+            if (butSearch.Text.Trim() == "Search Mode")
+            {
+                if (textSearch.Text.Trim() == "")
+                {
+                    MessageBox.Show("Text box is empty!", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textSearch.Focus();
+                    return;
+                }
+                butSearch.Text = "Normal Mode";
+                reset2();
+            }
+            else
+            {
+                butSearch.Text = "Search Mode";
+                reset();
+            }
         }
         private bool check(int k)
         {
