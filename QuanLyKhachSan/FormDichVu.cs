@@ -86,10 +86,20 @@ namespace QuanLyKhachSan
                 }
             }
         }
-        //Chưa làm
+        
         private void butDel_Click(object sender, EventArgs e)
         {
-            
+            if (listView1.SelectedItems.Count > 0)
+            {
+                connector.DeleteObject("4", textID.Text.Trim(), "");
+                if (butSearch.Text.Trim() == "Normal Mode")
+                {
+                    reset2();
+                }
+                else reset();
+                textPrice.Text = textName.Text = textID.Text = "";
+                MessageBox.Show("Deleting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         //Chưa làm
         private void butSearch_Click(object sender, EventArgs e)
