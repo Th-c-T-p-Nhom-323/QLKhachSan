@@ -101,10 +101,25 @@ namespace QuanLyKhachSan
                 MessageBox.Show("Deleting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        //Chưa làm
+        
         private void butSearch_Click(object sender, EventArgs e)
         {
-            
+            if (butSearch.Text.Trim() == "Search Mode")
+            {
+                if (textSearch.Text.Trim() == "")
+                {
+                    MessageBox.Show("Text box is empty!", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textSearch.Focus();
+                    return;
+                }
+                butSearch.Text = "Normal Mode";
+                reset2();
+            }
+            else
+            {
+                butSearch.Text = "Search Mode";
+                reset();
+            }
         }
         private bool check(int k)
         {
