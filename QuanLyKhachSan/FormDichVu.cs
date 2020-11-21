@@ -162,10 +162,23 @@ namespace QuanLyKhachSan
             }
             return true;
         }
-        //Chưa làm
+       
         private void butFree_Click(object sender, EventArgs e)
         {
-            
+            if (butFree.Text == "Add")
+            {
+                if (check(1) == false) return;
+                connector.InsertUpdateObject("AddObject", "4", textID.Text, "", textName.Text, "1/1/1994", "1/1/1994", textPrice.Text);
+                MessageBox.Show("Inserting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (check(2) == false) return;
+                connector.InsertUpdateObject("EditObject", "4", textID.Text, "", textName.Text, "1/1/1994", "1/1/1994", textPrice.Text);
+                MessageBox.Show("Updating completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            if (butSearch.Text.Trim() == "Search Mode") reset();
+            else reset2();
         }
     }
 }
