@@ -125,12 +125,68 @@ namespace QuanLyKhachSan
         }
         private bool check(int k)
         {
-
+            if (k == 1)
+            {
+                if (textID.Text.Trim() == "")
+                {
+                    MessageBox.Show("ID's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    textID.Focus();
+                    return false;
+                }
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    if (textID.Text.Trim() == table.Rows[i][0].ToString().Trim())
+                    {
+                        MessageBox.Show("ID's values has been taken, please input new ID", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        textID.Focus();
+                        return false;
+                    }
+                }
+            }
+            if (textState.Text.Trim() == "")
+            {
+                MessageBox.Show("State's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textState.Focus();
+                return false;
+            }
+            if (textCost.Text.Trim() == "")
+            {
+                MessageBox.Show("Cost's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textCost.Focus();
+                return false;
+            }
+            int b;
+            if (int.TryParse(textCost.Text, out b) == false)
+            {
+                MessageBox.Show("This Cost per day value is not valid", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textCost.Focus();
+                return false;
+            }
+            if (textState.Text.Trim() != "Ready" && textState.Text.Trim()!="Busy")
+            {
+                MessageBox.Show("State's values must be [Busy,Ready] only", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textState.Focus();
+                return false;
+            }
+            return true;
         }
 
         private void butFree_Click(object sender, EventArgs e)
         {
-            
+            if (butFree.Text == "Add")
+            {
+                if (check(1) == false) return;
+                connector.InsertUpdateObject("AddObject", "2", textID.Text, textState.Text, textNote.Text, "1/1/1994", "1/1/1994", textCost.Text);
+                MessageBox.Show("Inserting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (check(2) == false) return;
+                connector.InsertUpdateObject("EditObject", "2", textID.Text, textState.Text, textNote.Text, "1/1/1994", "1/1/1994", textCost.Text);
+                MessageBox.Show("Updating completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            if (butSearch.Text.Trim() == "Search Mode") reset();
+            else reset2();
         }
     }
 }
