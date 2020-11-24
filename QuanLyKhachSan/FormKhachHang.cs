@@ -66,12 +66,42 @@ namespace QuanLyKhachSan
 
         private void radView_CheckedChanged(object sender, EventArgs e)
         {
-            
+            RadioButton rad = (RadioButton)(sender);
+            if (rad.Checked == true)
+            {
+                butFree.Text = rad.Text;
+                if (rad.Text == "View")
+                {
+                    butFree.Enabled = false;
+                    textCMND.ReadOnly = textName.ReadOnly = textID.ReadOnly = textPhone.ReadOnly = true;
+                }
+                else
+                {
+                    butFree.Enabled = true;
+                    textID.ReadOnly = true;
+                    textCMND.ReadOnly = textName.ReadOnly = textPhone.ReadOnly = false;
+                    if (rad.Text == "Add")
+                    {
+                        textID.ReadOnly = false;
+                        textCMND.Text = textName.Text = textID.Text = textPhone.Text = "";
+                    }
+                }
+            }
         }
 
         private void butDel_Click(object sender, EventArgs e)
         {
-            
+            if (listView1.SelectedItems.Count > 0)
+            {
+                connector.DeleteObject("1", textID.Text.Trim(), "");
+                if (butSearch.Text.Trim() == "Normal Mode")
+                {
+                    reset2();
+                }
+                else reset();
+                textCMND.Text = textName.Text = textID.Text = textPhone.Text = "";
+                MessageBox.Show("Deleting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void butSearch_Click(object sender, EventArgs e)
@@ -80,7 +110,26 @@ namespace QuanLyKhachSan
         }
         private bool check(int k)
         {
+            if (k == 1)
+            {
+                if (textID.Text.Trim() == "")
+                {
+                    MessageBox.Show("ID's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    textID.Focus();
+                    return false;
+                }
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    if (textID.Text.Trim() == table.Rows[i][0].ToString().Trim())
+                    {
+                        MessageBox.Show("ID's values has been taken, please input new ID", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        textID.Focus();
+                        return false;
+                    }
+                }
+            }
             
+            return true;
         }
 
         private void butFree_Click(object sender, EventArgs e)
