@@ -112,17 +112,65 @@ namespace QuanLyKhachSan
 
         private void radView_CheckedChanged(object sender, EventArgs e)
         {
-            
+            RadioButton rad = (RadioButton)(sender);
+            if (rad.Checked == true)
+            {
+                butFree.Text = rad.Text;
+                if (rad.Text == "View")
+                {
+                    butFree.Enabled = false;
+                    textNum.ReadOnly = textID2.ReadOnly = textID1.ReadOnly = true;
+                    listView2.Enabled = listView3.Enabled = false;
+                }
+                else
+                {
+                    butFree.Enabled = true;
+                    textID1.ReadOnly = textID2.ReadOnly = true;
+                    listView2.Enabled = listView3.Enabled = false;
+                    textNum.ReadOnly = false;
+                    if (rad.Text == "Add")
+                    {
+                        textID1.ReadOnly = textID2.ReadOnly = false;
+                        textID1.Text = textID2.Text = textNum.Text = "";
+                        listView2.Enabled = listView3.Enabled = true;
+                    }
+                }
+            }
         }
 
         private void butDel_Click(object sender, EventArgs e)
         {
-            
+            if (listView1.SelectedItems.Count > 0)
+            {
+                connector.DeleteObject("5", textID1.Text.Trim(), textID2.Text.Trim());
+                if (butSearch.Text.Trim() == "Normal Mode")
+                {
+                    reset2();
+                }
+                else reset();
+                textID1.Text = textID2.Text = textNum.Text = "";
+                MessageBox.Show("Deleting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void butSearch_Click(object sender, EventArgs e)
         {
-            
+            if (butSearch.Text.Trim() == "Search Mode")
+            {
+                if (textSearch.Text.Trim() == "")
+                {
+                    MessageBox.Show("Text box is empty!", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textSearch.Focus();
+                    return;
+                }
+                butSearch.Text = "Normal Mode";
+                reset2();
+            }
+            else
+            {
+                butSearch.Text = "Search Mode";
+                reset();
+            }
         }
 
         private bool check(int k)
@@ -151,13 +199,38 @@ namespace QuanLyKhachSan
                     }
                 }
             }
-            
+            if (textNum.Text.Trim() == "")
+            {
+                MessageBox.Show("Number's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textNum.Focus();
+                return false;
+            }
+            int b;
+            if (int.TryParse(textNum.Text, out b) == false)
+            {
+                MessageBox.Show("This Number value is not valid", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textNum.Focus();
+                return false;
+            }
             return true;
         }
 
         private void butFree_Click(object sender, EventArgs e)
         {
-            
+            if (butFree.Text == "Add")
+            {
+                if (check(1) == false) return;
+                connector.InsertUpdateObject("AddObject", "5", textID1.Text, textID2.Text, "", "1/1/1994", "1/1/1994", textNum.Text);
+                MessageBox.Show("Inserting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (check(2) == false) return;
+                connector.InsertUpdateObject("EditObject", "5", textID1.Text, textID2.Text, "", "1/1/1994", "1/1/1994", textNum.Text);
+                MessageBox.Show("Updating completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            if (butSearch.Text.Trim() == "Search Mode") reset();
+            else reset2();
         }
     }
 }
