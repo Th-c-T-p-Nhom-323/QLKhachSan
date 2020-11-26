@@ -177,7 +177,97 @@ namespace QuanLyKhachSan
             }
         }
 
-        
-        
+        private bool check(int k)
+        {
+            if (textID1.Text.Trim() == "")
+            {
+                MessageBox.Show("Room ID's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textID1.Focus();
+                return false;
+            }
+            if (textID2.Text.Trim() == "")
+            {
+                MessageBox.Show("Client ID's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textID2.Focus();
+                return false;
+            }
+            if (k == 1)
+            {
+                for (int i = 0; i < table1.Rows.Count; i++)
+                {
+                    if (textID1.Text.Trim() == table1.Rows[i][0].ToString().Trim())
+                    {
+                        MessageBox.Show("This room " + table1.Rows[i][0].ToString().Trim() + "already has been rent, please pick new room", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        textID1.Focus();
+                        return false;
+                    }
+                }
+            }
+            if (textNum.Text.Trim() == "")
+            {
+                MessageBox.Show("Number's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textNum.Focus();
+                return false;
+            }
+            if (textDate1.Text.Trim() == "")
+            {
+                MessageBox.Show("Rent day's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textDate1.Focus();
+                return false;
+            }
+            if (textDate2.Text.Trim() == "")
+            {
+                MessageBox.Show("Return day's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textDate2.Focus();
+                return false;
+            }
+            int b;
+            if (int.TryParse(textNum.Text, out b) == false)
+            {
+                MessageBox.Show("This Number value is not valid", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textNum.Focus();
+                return false;
+            }
+            DateTime a;
+            if (DateTime.TryParse(textDate1.Text, out a) == false)
+            {
+                MessageBox.Show("This day value is not valid", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textDate1.Focus();
+                return false;
+            }
+            if (DateTime.TryParse(textDate2.Text, out a) == false)
+            {
+                MessageBox.Show("This day value is not valid", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textDate2.Focus();
+                return false;
+            }
+            return true;
+        }
+
+        private void butFree_Click(object sender, EventArgs e)
+        {
+            if (butFree.Text == "Add")
+            {
+                if (check(1) == false) return;
+                connector.InsertUpdateObject("AddObject", "7", textID1.Text, textID2.Text, textNote.Text, textDate1.Text, textDate2.Text, textNum.Text);
+                MessageBox.Show("Inserting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                reset3();
+            }
+            else
+            {
+                if (check(2) == false) return;
+                connector.InsertUpdateObject("EditObject", "7", textID1.Text, textID2.Text, textNote.Text, textDate1.Text, textDate2.Text, textNum.Text);
+                MessageBox.Show("Updating completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            if (butSearch.Text.Trim() == "Search Mode") reset();
+            else reset2();
+        }
+
+        private void butAuto_Click(object sender, EventArgs e)
+        {
+            connector.Auto();
+            if (butSearch.Text.Trim() == "Search Mode") reset();
+            else reset2();
+        }
     }
 }
