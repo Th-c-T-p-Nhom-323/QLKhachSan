@@ -106,7 +106,22 @@ namespace QuanLyKhachSan
 
         private void butSearch_Click(object sender, EventArgs e)
         {
-            
+            if (butSearch.Text.Trim() == "Search Mode")
+            {
+                if (textSearch.Text.Trim() == "")
+                {
+                    MessageBox.Show("Text box is empty!", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textSearch.Focus();
+                    return;
+                }
+                butSearch.Text = "Normal Mode";
+                reset2();
+            }
+            else
+            {
+                butSearch.Text = "Search Mode";
+                reset();
+            }
         }
         private bool check(int k)
         {
@@ -128,13 +143,50 @@ namespace QuanLyKhachSan
                     }
                 }
             }
-            
+            if (textName.Text.Trim() == "")
+            {
+                MessageBox.Show("Name's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textName.Focus();
+                return false;
+            }
+            if (textCMND.Text.Trim() == "")
+            {
+                MessageBox.Show("CMND's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textCMND.Focus();
+                return false;
+            }
+            if (textPhone.Text.Trim() == "")
+            {
+                MessageBox.Show("Phone's values must not be null", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textPhone.Focus();
+                return false;
+            }
+            int b;
+            if (int.TryParse(textPhone.Text, out b) == false)
+            {
+                MessageBox.Show("This Phone number is not valid", "O___O", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                textPhone.Focus();
+                return false;
+            }
             return true;
         }
 
         private void butFree_Click(object sender, EventArgs e)
         {
-            
+            if (butFree.Text == "Add")
+            {
+                if (check(1) == false) return;
+                connector.InsertUpdateObject("AddObject", "1", textID.Text, textCMND.Text, textName.Text, "1/1/1994", "1/1/1994", textPhone.Text);
+                MessageBox.Show("Inserting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (check(2) == false) return;
+                connector.InsertUpdateObject("EditObject", "1", textID.Text, textCMND.Text, textName.Text, "1/1/1994", "1/1/1994", textPhone.Text);
+                MessageBox.Show("Updating completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            if (butSearch.Text.Trim() == "Search Mode") reset();
+            else reset2();
         }
     }
 }
