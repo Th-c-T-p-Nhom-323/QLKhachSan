@@ -46,7 +46,7 @@ namespace QuanLyKhachSan
             }
             else
             {
-                MessageBox.Show("Welcome to QuanLyThuVien project", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("Welcome to QuanLyKhachsan project", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 butKhachHang.Visible = butDichVu.Visible = butDoDung.Visible = butPhong.Visible = butQLDichVu.Visible = butQLDoDung.Visible = butQLPhong.Visible = butLogOut.Visible = true;
                 butLogIn.Visible = textID.Visible = textPass.Visible = label1.Visible = label2.Visible = false;
                 panel2.Visible = panel3.Visible = true;
@@ -104,7 +104,7 @@ namespace QuanLyKhachSan
 
         private void butLogOut_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Thanks for using QuanLyThuVien project", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show("Thanks for using QuanLyKhachSan project", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             butKhachHang.Visible = butDichVu.Visible = butDoDung.Visible = butPhong.Visible = butQLDichVu.Visible = butQLDoDung.Visible = butQLPhong.Visible = butLogOut.Visible = false;
             butLogIn.Visible = textID.Visible = textPass.Visible = label1.Visible = label2.Visible = true;
             panel2.Visible = panel3.Visible = false;
