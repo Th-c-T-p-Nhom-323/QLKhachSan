@@ -86,7 +86,7 @@ namespace QuanLyKhachSan
                 }
             }
         }
-        
+
         private void butDel_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -101,7 +101,7 @@ namespace QuanLyKhachSan
                 MessageBox.Show("Deleting completed", "^...^", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        
+
         private void butSearch_Click(object sender, EventArgs e)
         {
             if (butSearch.Text.Trim() == "Search Mode")
@@ -162,7 +162,7 @@ namespace QuanLyKhachSan
             }
             return true;
         }
-       
+
         private void butFree_Click(object sender, EventArgs e)
         {
             if (butFree.Text == "Add")
